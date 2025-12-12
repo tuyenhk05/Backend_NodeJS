@@ -1,0 +1,77 @@
+﻿extends ../../layouts/default.pug
+include ../../mixins/filter-status.pug
+include ../../mixins/search.pug
+block content
+  h1(class="mb-4") Quản lý sản phẩm
+  
+  .card.mb-3
+    .card-header Bộ lọc và Tìm kiếm
+    .card-body
+      .row
+       .col-md-6
+          +searchMixin(searchQuery)
+       .col-md-6.text-right
+           +filter-status(listStatus)
+
+  table(class="table table-hover table-sm")
+    thead
+      tr
+        th STT
+        th Hình ảnh
+        th Tên sản phẩm
+        th Giá
+        th Trạng thái
+        th Hành động
+    tbody
+      if products.length > 0
+        each product, index in products
+          tr 
+            td #{index + 1}
+            td 
+              img(src=product.thumbnail, alt=product.title, width="100px", height="auto")
+            td #{product.title}
+            td $#{product.price}
+            td 
+              if product.status === "active"
+                button(
+                    class="btn badge badge-success"
+                    changeStatusButton
+                    dataStatus="active"
+                    dataId=product.id
+                
+                ) Hoạt động
+              else if product.status === "inactive"
+                button(
+                    class="btn badge badge-danger"
+                     changeStatusButton
+                    dataStatus="inactive"
+                    dataId=product.id
+                ) Dừng hoạt động
+              else
+                span(class="badge badge-secondary") Không xác định
+            td 
+              a(href=`${prefixAdmin}/products/edit/${product.id}` class="btn btn-warning btn-sm") Sửa
+              button(class="btn btn-danger btn-sm ml-1") Xóa
+      else 
+        tr
+          td(colspan="6" class="text-center") Không tìm thấy sản phẩm nào
+
+  nav(aria-label="Page navigation example")
+    ul(class="pagination")
+        li(class=`page-item ${currentPage === 1 ? 'disabled' : ''}`)
+          button(class="page-link" paginationButton=currentPage-1) Trước
+
+        - for(let i=1; i <= totalPages; i++)
+            li( paginationButton=i class=`page-item ${i === currentPage ? 'active' : ''}`)
+             button(class="page-link") #{i}
+
+        li(class=`page-item ${currentPage === totalPages ? 'disabled' : ''}`)
+            button(class="page-link" paginationButton=currentPage+1) Tiếp theo
+    form(
+        action=""
+        method="POST"
+        id="formChangeStatus"
+        style="display: none;"
+        dataPath=`${prefixAdmin}/products/update-status`
+    )
+    script(src="/admin/js/products.js")

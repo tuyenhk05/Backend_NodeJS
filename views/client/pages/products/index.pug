@@ -1,6 +1,12 @@
-doctype html
-html
- title Product Management details
-body
- h1 Welcome to the Product Management System
- p This is the home page for managing products. Product details are listed below.
+extend ../../layouts/default.pug
+
+block content
+    h1 Product List
+    .row
+        each product in products
+            .col-md-4.mb-4
+                .card
+                    img.card-img-top(src=product.thumbnail, alt=product.title)
+                    .card-body
+                        h5.card-title= product.title
+                        p.card-text $#{product.price  }

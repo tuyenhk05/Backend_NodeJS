@@ -1,0 +1,30 @@
+.header-container {
+    background-color: #f8f9fa;
+    padding: 10px 20px;
+    border-bottom: 1px solid #dee2e6;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    z-index: 1000;
+    height: 100px;
+}
+.sidebar {
+    width: 20%;
+    background-color: #343a40;
+    color: #ffffff;
+    height: 100vh;
+    position: fixed;
+}
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+.sidebar ul li {
+    padding: 15px 20px;
+    border-bottom: 1px solid #495057;
+}
+.main-content, footer {
+    margin-left: 20%;
+    margin-top: 100px;
+    padding: 20px;
+}
