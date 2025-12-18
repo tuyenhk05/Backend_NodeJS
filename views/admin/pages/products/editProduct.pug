@@ -1,0 +1,99 @@
+﻿extends ../../layouts/default.pug
+block content
+  h1(class="mb-4") Tạo mới sản phẩm
+  form(
+  action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`
+  method="POST" 
+  enctype="multipart/form-data")
+    .form-group
+      label(for="name") Tên sản phẩm
+      input(
+          type="text"
+          class="form-control"
+          id="name"
+          name="title"
+          value=product.title
+          required)
+    .form-group
+      label(for="price") Mô tả
+      textarea(
+          class="form-control" 
+          id="description"
+          name="description" 
+          rows="3"
+          required) #{product.description}
+    .form-group
+      label(for="price") Giá
+      input(
+          type="number" 
+          class="form-control"
+          id="price"
+          name="price"
+          required
+          value=product.price
+          min="1"
+      )
+    .from-group
+      label(for="discountPercentage") Giảm giá (%)
+      input(
+          type="number"
+          class="form-control" 
+          id="discountPercentage"
+          name="discountPercentage" 
+           value=product.discountPercentage
+          required
+      )
+    .form-group
+      label(for="image") Hình ảnh
+      input(type="file"
+      class="form-control-file"
+      id="image"
+      name="thumbnail"
+      accept="image/*"
+      input-image
+      )
+      img(
+          preview-image
+          id="preview"
+          src=product.thumbnail
+          alt="Preview Image"
+          style=" max-width: 200px; margin-top: 10px;"
+      )
+    .form-group
+     label(for="position") Vị trí
+     input(
+         type="number"
+         class="form-control" 
+         id="position"
+         name="position"
+         min="1"
+         placeholder="Tự động tăng lên"
+            value=product.position
+     )
+    .form-group
+      label Trạng thái sản phẩm
+      br
+      //- Nhóm Radio Hoạt động
+      div(class="form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusActive"
+          name="status"
+          value="active"
+          checked=(product.status === "active")
+        )
+        label(for="statusActive" class="form-check-label") Hoạt động
+
+      //- Nhóm Radio Dừng hoạt động
+      div(class="form-check form-check-inline")
+        input(
+          type="radio"
+          class="form-check-input"
+          id="statusInactive"
+          name="status"
+          value="inactive"
+          checked=(product.status === "inactive")
+        )
+        label(for="statusInactive" class="form-check-label") Dừng hoạt động
+    button(type="submit" class="btn btn-primary") Cập nhật sản phẩm
