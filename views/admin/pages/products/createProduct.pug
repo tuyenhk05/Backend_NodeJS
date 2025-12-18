@@ -19,7 +19,8 @@ block content
       input(type="number" class="form-control" id="discountPercentage" name="discountPercentage" required)
     .form-group
       label(for="image") Hình ảnh
-      input(type="file" class="form-control-file" id="image" name="thumbnail" accept="image/*")
+      input(type="file" class="form-control-file" id="image" name="thumbnail" accept="image/*" input-image)
+      img(preview-image id="preview" src="#" alt="Preview Image" style="display:none; max-width: 200px; margin-top: 10px;")
     .form-group
      label(for="position") Vị trí
      input(type="number" class="form-control" id="position" name="position"  min="1" placeholder="Tự động tăng lên")

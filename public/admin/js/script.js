@@ -33,18 +33,20 @@ if (buttonsStatus.length > 0) {
 
 // Xử lý sự kiện tìm kiếm
 const keysearch = document.querySelector("#form-search");
-keysearch.addEventListener("submit", function (e) {
-    const url = new URL(window.location.href);
+if (keysearch) {
+    keysearch.addEventListener("submit", function (e) {
+        const url = new URL(window.location.href);
 
-    e.preventDefault();
-    const keyword = document.querySelector(".form-control").value;
-    if (keyword) {
-        url.searchParams.set("keyword", keyword);
-    } else {
-        url.searchParams.delete("keyword");
-    }
-    window.location.href = url.href;
-});
+        e.preventDefault();
+        const keyword = document.querySelector(".form-control").value;
+        if (keyword) {
+            url.searchParams.set("keyword", keyword);
+        } else {
+            url.searchParams.delete("keyword");
+        }
+        window.location.href = url.href;
+    });
+}
 
 // Xử lý phân trang
 const paginationLinks = document.querySelectorAll("[paginationButton]");
@@ -58,12 +60,24 @@ if (paginationLinks.length > 0) {
             window.location.href = url.href;
         });
     });
-   
-}
-const url = new URL(window.location.href);
- if (url.searchParams.get("page") > paginationLinks.length - 2) {
+    if (url.searchParams.get("page") > paginationLinks.length - 2) {
         url.searchParams.set("page", paginationLinks.length - 2);
         window.location.href = url.href;
     }
 
+   
+}
+
  
+//preview image khi chọn file
+const inputImage = document.querySelector("[input-image]");
+if (inputImage) {
+    const previewImage = document.querySelector("[preview-image]");
+    inputImage.addEventListener('change', (event) => {
+        const file = event.target.files[0];
+        if (file) {
+            previewImage.src = URL.createObjectURL(file);
+            previewImage.style.display = "block";
+        }
+    })
+}
