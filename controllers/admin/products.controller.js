@@ -135,3 +135,41 @@ module.exports.createProducts = async (req, res) => {
         res.redirect(`${systemConfig.preficxAdmin}/products`);
     }
 };
+//[GET] /admin/products/edit/:id
+module.exports.edit = async (req, res) => {
+    try {
+        const id = req.params.id;
+        const find = { _id: id, deleted: false };
+        const product = await Product.findOne(find);
+        if (product) {
+            res.render('admin/pages/products/editProduct', {
+                pageTitle: 'Edit Product',
+                product: product
+            });
+        } else {
+            res.redirect(`${systemConfig.preficxAdmin}/products`);
+        }
+    } catch (error) {
+        console.log("Tẩu hỏa nhập ma khi tạo sản phẩm:", error);
+        res.redirect(`${systemConfig.preficxAdmin}/products`);
+    }
+};
+//[PATCH] /admin/products/edit/:id
+module.exports.editProducts = async (req, res) => {
+    try {
+        const id = req.params.id;
+        req.body.price = parseInt(req.body.price);
+        req.body.discountPercentage = parseInt(req.body.discountPercentage);
+        req.body.position = parseInt(req.body.position);
+        if (req.file) {
+            req.body.thumbnail = `/uploads/${req.file.filename}`;
+        }
+        await Product.updateOne({_id: id},req.body );
+        res.redirect(req.get('referer'));
+        
+    } catch (error) {
+        console.log("Tẩu hỏa nhập ma khi tạo sản phẩm:", error);
+        res.redirect(`${systemConfig.preficxAdmin}/products`);
+    }
+};
+
