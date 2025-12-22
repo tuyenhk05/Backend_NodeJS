@@ -24,15 +24,10 @@ router.get("/edit/:id", productsController.edit);
 router.patch(
     "/edit/:id",
     upload.single("thumbnail"),
-<<<<<<< HEAD
     uploadMiddleware.upload,
     productsValidate.createPost,
     productsController.editProducts
 );
 router.get("/detail/:id", productsController.detail);
-=======
-    productsValidate.createPost,
-    productsController.editProducts
-);
->>>>>>> 1d80934e36b1ec9b64fab5129ffac996047c69fb
+
 module.exports = router;

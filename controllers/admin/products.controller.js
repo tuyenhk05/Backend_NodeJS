@@ -172,7 +172,6 @@ module.exports.editProducts = async (req, res) => {
         res.redirect(`${systemConfig.preficxAdmin}/products`);
     }
 };
-<<<<<<< HEAD
 //[GET] /admin/products/detail/:id
 module.exports.detail = async (req, res) => {
     const id = req.params.id;
@@ -187,6 +186,4 @@ module.exports.detail = async (req, res) => {
         
     });
 };
-=======
 
->>>>>>> 1d80934e36b1ec9b64fab5129ffac996047c69fb
