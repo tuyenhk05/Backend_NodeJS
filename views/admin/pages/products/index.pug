@@ -74,7 +74,8 @@ block content
             td #{index + 1}
             td 
               img(class="img-fluid img-thumbnail" src=product.thumbnail, alt=product.title, width="100px", height="auto")
-            td #{product.title}
+            td 
+                a(href=`${prefixAdmin}/products/detail/${product.id}` class="badge badge-light") #{product.title}
             td $#{product.price}
             td 
               if product.status === "active"

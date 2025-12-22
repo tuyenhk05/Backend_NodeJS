@@ -103,7 +103,7 @@ module.exports.updateMultiStatus = async (req, res) => {
         res.redirect(`${systemConfig.preficxAdmin}/products`);
     }
 };
-//[POST] /admin/products/create
+//[GET] /admin/products/create
 module.exports.createproducts = async (req, res) => {
     try {
         res.render('admin/pages/products/createProduct', {
@@ -126,7 +126,7 @@ module.exports.createProducts = async (req, res) => {
         else {
             req.body.position = await Product.countDocuments() + 1;
         }
-        req.body.thumbnail = req.file ? `/uploads/${req.file.filename}` : '';
+        //req.body.thumbnail = req.file ? `/uploads/${req.file.filename}` : '';
         const newProduct = new Product(req.body);
         await newProduct.save();
         res.redirect(`${systemConfig.preficxAdmin}/products`);
@@ -172,4 +172,17 @@ module.exports.editProducts = async (req, res) => {
         res.redirect(`${systemConfig.preficxAdmin}/products`);
     }
 };
-
+//[GET] /admin/products/detail/:id
+module.exports.detail = async (req, res) => {
+    const id = req.params.id;
+    let find = {
+        deleted: false,
+        _id: id
+    };
+    const product = await Product.findOne(find);
+    res.render('admin/pages/products/detail', {
+        pageTitle: product.title,
+        product: product
+        
+    });
+};

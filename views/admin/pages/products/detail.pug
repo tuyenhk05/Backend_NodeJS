@@ -1,0 +1,15 @@
+﻿extends ../../layouts/default.pug
+block content
+  h1(class="mb-4") Chi tiết sản phẩm
+  h2 Tên sản phẩm: #{product.title}
+    p Mô tả: #{product.description}
+    p Giá: #{product.price}
+    p Trạng thái: #{product.status}
+    p Hình ảnh:
+      if product.thumbnail 
+        img(src=product.thumbnail alt=product.title width="200")
+      else
+        | Không có hình ảnh
+      
+
+  
