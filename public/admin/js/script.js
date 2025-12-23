@@ -81,3 +81,31 @@ if (inputImage) {
         }
     })
 }
+
+
+// Xử lý sắp xếp
+const sortSelect = document.querySelector("[sort]");
+if (sortSelect) {
+    sortSelect.addEventListener("change", () => {
+        const url = new URL(window.location.href);
+        const sortValue = sortSelect.value; // Lấy giá trị được chọn
+        if (sortValue) {
+            const [sortBy, order] = sortValue.split("-");
+            url.searchParams.set("sortBy", sortBy);
+            url.searchParams.set("order", order);
+        } else {
+            url.searchParams.delete("sortBy");
+            url.searchParams.delete("order");
+        }
+        window.location.href = url.href;
+    });
+}
+// Đặt giá trị select theo URL khi tải trang
+const urlParams = new URLSearchParams(window.location.search);
+const sortBy = urlParams.get("sortBy");
+const order = urlParams.get("order");
+if (sortBy && order) {
+    sortSelect.value = `${sortBy}-${order}`;
+} else {
+    sortSelect.value = "";
+}

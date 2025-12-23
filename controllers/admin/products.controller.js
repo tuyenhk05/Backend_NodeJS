@@ -25,7 +25,11 @@ module.exports.products = async (req, res) => {
 
     const countProducts = await Product.countDocuments(find);
     let Pagination = panigation(countProducts, page, 4);
-
+    // Sort
+    const sort = {};
+    if (req.query.sortBy && req.query.order) {
+        sort[req.query.sortBy] = req.query.order;
+    } 
 
 
 
@@ -33,7 +37,7 @@ module.exports.products = async (req, res) => {
         .find(find)
         .limit(Pagination.limitItem)
         .skip(Pagination.skip)
-        .sort({ position: "desc" });
+        .sort(sort);
 
     res.render('admin/pages/products/index', {
         pageTitle: 'Product Management',
