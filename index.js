@@ -5,12 +5,14 @@ const methodOverride = require('method-override');
 const router = require('./routes/client/index.routes');
 const routerAdmin = require('./routes/admin/index.router');
 const bodyParser = require('body-parser');
-
+const path = require('path');
 
 
 const app = express();
 require('dotenv').config();
 app.use(methodOverride('_method'));
+
+app.use('/tinymce', express.static(path.join(__dirname, 'node_modules', 'tinymce')));
 
 app.set('view engine', 'pug');
 app.set('views', './views');
