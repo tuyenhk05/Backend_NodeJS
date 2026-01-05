@@ -29,7 +29,10 @@ module.exports.products = async (req, res) => {
     const sort = {};
     if (req.query.sortBy && req.query.order) {
         sort[req.query.sortBy] = req.query.order;
-    } 
+    }
+    else {
+        sort['position'] = -1; //Mặc định sắp xếp mới nhất
+    }
 
 
 

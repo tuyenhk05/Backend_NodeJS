@@ -1,8 +1,9 @@
 ﻿extends ../../layouts/default.pug
+include ../../mixins/select-tree.pug
 block content
-  h1(class="mb-4") Tạo mới sản phẩm
+  h1(class="mb-4") Tạo mới danh mục sản phẩm
   form(
-  action=`${prefixAdmin}/products/create`
+  action=`${prefixAdmin}/product-category/create`
   method="POST" 
   enctype="multipart/form-data")
     .form-group
@@ -12,11 +13,9 @@ block content
       label(for="description") Mô tả
       textarea(class="form-control tinymce-mce" id="description" name="description" rows="3" )
     .form-group
-      label(for="price") Giá
-      input(type="number" class="form-control" id="price" name="price" required min="1" )
-    .from-group
-      label(for="discountPercentage") Giảm giá (%)
-      input(type="number" class="form-control" id="discountPercentage" name="discountPercentage" required)
+        select(class="form-control" id="type" name="parentId" )
+          option(value="") Chọn danh mục cha (nếu có)
+          +select-tree(records)
     .form-group
       label(for="image") Hình ảnh
       input(type="file" class="form-control-file" id="image" name="thumbnail" accept="image/*" input-image)
