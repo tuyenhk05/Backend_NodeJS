@@ -1,7 +1,13 @@
-﻿mixin select-tree(records, level = 1)
-  each item in records
+﻿mixin select-tree(items, level = 1, parent_id = "")
+  each item in items
+    //- Tạo tiền tố thụt lề dựa trên cấp độ (Level)
     - const prefix = Array(level + 1).join("-- ")
-    option(value=item.id) #{prefix}#{item.title}
+    
+    option(
+      value=item.id 
+      selected=(item.id === parent_id ? true : false)
+    ) #{prefix}#{item.title}
+    
+    //- Nếu danh mục này có danh mục con (children), ta gọi lại chính mixin này (Đệ quy)
     if item.children && item.children.length > 0
-      // Nếu có con, gọi lại chính mixin này và tăng Level lên
-      +select-tree(item.children, level + 1)
+      +select-tree(item.children, level + 1, parent_id)

@@ -16,7 +16,13 @@ router.post(
     '/create',
     upload.single("thumbnail"),
     uploadMiddleware.upload,
-    productsCategoryController.createProductsCategoryPostController);
-
-
+    productsCategoryController.createProductsCategoryPostController
+);
+router.get('/edit/:id', productsCategoryController.editProductsCategoryController);
+router.patch(
+    '/edit/:id',
+    upload.single("thumbnail"),
+    uploadMiddleware.upload,
+    productsCategoryController.editProductsCategoryPatchController
+);
 module.exports = router;

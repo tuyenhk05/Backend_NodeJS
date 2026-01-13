@@ -27,9 +27,7 @@ module.exports.createProductsCategoryController = async (req, res) => {
             deleted: false,
         };
         const records = await productCategoryModel.find(find);
-        console.log("Records fetched from DB:", records);
         const newRecords = createTreeHelper(records);
-        console.log("New Records with Tree Structure:", newRecords);
         res.render('admin/pages/products-category/create', {
             pageTitle: 'Create Product Category',
             records: newRecords
@@ -42,7 +40,6 @@ module.exports.createProductsCategoryController = async (req, res) => {
 //[POST] /admin/products-category/create 
 module.exports.createProductsCategoryPostController = async (req, res) => {
     try {
-        console.log("Body nhận được:", req.body);
         if (req.body.position) {
             req.body.position = parseInt(req.body.position);
         }
@@ -58,3 +55,43 @@ module.exports.createProductsCategoryPostController = async (req, res) => {
         res.redirect(`${systemConfig.preficxAdmin}/product-category`);
     }
 }
+//[GET] /admin/products-category/edit/:id
+module.exports.editProductsCategoryController = async (req, res) => {
+    try {
+        const id = req.params.id;
+        let find = {
+            deleted: false,
+            _id:  id 
+        };
+        const data = await productCategoryModel.findOne(find);
+        const records = await productCategoryModel.find(
+            {
+                deleted: false,
+            }
+        );
+        const newRecords = createTreeHelper(records);
+        res.render('admin/pages/products-category/edit', {
+            pageTitle: 'Edit Product Category',
+            data: data,
+            records: newRecords
+        });
+    } catch (error) {
+        console.error('Error rendering edit product category page:', error);
+        res.status(500).send('Internal Server Error');
+    }
+}
+//[PATCH] /admin/products-category/edit/:id
+module.exports.editProductsCategoryPatchController = async (req, res) => {
+    try {
+        const id = req.params.id;
+        if (req.body.position) {
+            req.body.position = parseInt(req.body.position);
+        }
+        await productCategoryModel.updateOne({ _id: id }, req.body);
+        res.redirect(`${systemConfig.preficxAdmin}/product-category`);
+    } catch (error) {
+        console.log("Tẩu hỏa nhập ma khi tạo sản phẩm:", error);
+        res.redirect(`back`);
+    }
+};
+
