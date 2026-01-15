@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+﻿const mongoose = require('mongoose');
 
 
 const slug = require('mongoose-slug-updater');
@@ -8,6 +8,10 @@ const productschema = new mongoose.Schema(
         title: String,
         description: String,
         price: Number,
+        product_category_id: {
+            type: String,
+            default: "" // Mặc định để trống nếu chưa chọn danh mục
+        },
         discountPercentage: Number,
         thumbnail: String,
         status: String,

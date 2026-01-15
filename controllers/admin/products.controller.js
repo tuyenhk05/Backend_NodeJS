@@ -1,9 +1,11 @@
 ﻿
 const systemConfig = require('../../config/system');
 const Product = require("../../models/products.model");
+const productCategoryModel = require('../../models/products-category.model');
 const filterStatus = require('../../helpers/filterStatus');
 const search = require('../../helpers/search');
 const panigation = require('../../helpers/pagination');
+const createTreeHelper = require("../../helpers/createTree");
 //[GET] /admin/products
 module.exports.products = async (req, res) => {
     const status = req.query.status;
@@ -113,8 +115,14 @@ module.exports.updateMultiStatus = async (req, res) => {
 //[GET] /admin/products/create
 module.exports.createproducts = async (req, res) => {
     try {
+        const records = await productCategoryModel.find(
+            {
+                deleted: false
+            });
+        const rewRecords = createTreeHelper(records);
         res.render('admin/pages/products/createProduct', {
             pageTitle: 'Create Product',
+            records: rewRecords
            
         });
     } catch (error) {
@@ -148,10 +156,13 @@ module.exports.edit = async (req, res) => {
         const id = req.params.id;
         const find = { _id: id, deleted: false };
         const product = await Product.findOne(find);
+        const categories = await productCategoryModel.find({ deleted: false });
+        const newCategories = createTreeHelper(categories);
         if (product) {
             res.render('admin/pages/products/editProduct', {
                 pageTitle: 'Edit Product',
-                product: product
+                product: product,
+                records: newCategories
             });
         } else {
             res.redirect(`${systemConfig.preficxAdmin}/products`);

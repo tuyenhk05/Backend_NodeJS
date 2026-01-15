@@ -1,0 +1,37 @@
+﻿extends ../../layouts/default.pug
+block content
+  h1(class="mb-4") Quản lý vai trò
+  p Đây là trang quản lý vai trò người dùng trong hệ thống.
+  .card-body
+      .row
+        .col-md-4.text-left
+          a(href=`${prefixAdmin}/roles/create` class="btn btn-success mt-3 ") Thêm vai trò mới +
+  table(class="table table-hover table-sm")
+    thead
+      tr
+        th STT
+        th Tên vai trò
+        th Mô tả
+        th Hành động
+    tbody
+     if(roles.length > 0)
+       each role, index in roles
+         tr
+           td #{index + 1}
+           td #{role.title}
+           td #{role.description}
+           td 
+              a(
+                  href=`${prefixAdmin}/roles/edit/${role.id}` 
+                  class="btn btn-sm btn-primary mr-2"
+              ) Chỉnh sửa
+              a(
+                  href=`${prefixAdmin}/roles/delete/${role.id}`
+                  class="btn btn-sm btn-danger"
+                  onclick="return confirm('Bạn có chắc chắn muốn xóa vai trò này không?');"
+              ) Xóa
+     else
+           tr
+                td(colspan="3") Không có vai trò nào được tạo.
+
+           

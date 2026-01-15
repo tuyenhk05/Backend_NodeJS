@@ -1,6 +1,7 @@
 ﻿extends ../../layouts/default.pug
+include ../../mixins/select-tree.pug
 block content
-  h1(class="mb-4") Tạo mới sản phẩm
+  h1(class="mb-4") Cập nhật sản phẩm
   form(
   action=`${prefixAdmin}/products/edit/${product._id}?_method=PATCH`
   method="POST" 
@@ -17,11 +18,15 @@ block content
     .form-group
       label(for="price") Mô tả
       textarea(
-          class="form-control" 
+          class="form-control tinymce-mce" 
           id="description"
           name="description" 
           rows="3"
           required) #{product.description}
+    .form-group
+      select(class="form-control" id="type" name="product_category_id" required)
+          option(value="") Chọn danh mục sản phẩm
+          +select-tree(records,1,product.product_category_id)
     .form-group
       label(for="price") Giá
       input(
@@ -97,3 +102,5 @@ block content
         )
         label(for="statusInactive" class="form-check-label") Dừng hoạt động
     button(type="submit" class="btn btn-primary") Cập nhật sản phẩm
+    script(src="/tinymce/tinymce.min.js")
+    script(src="/admin/js/tinymce-config.js")

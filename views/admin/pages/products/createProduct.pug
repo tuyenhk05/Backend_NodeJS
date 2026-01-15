@@ -1,4 +1,5 @@
 ﻿extends ../../layouts/default.pug
+include ../../mixins/select-tree.pug
 block content
   h1(class="mb-4") Tạo mới sản phẩm
   form(
@@ -11,6 +12,10 @@ block content
     .form-group
       label(for="description") Mô tả
       textarea(class="form-control tinymce-mce" id="description" name="description" rows="3" )
+    .form-group
+        select(class="form-control" id="type" name="product_category_id" required)
+          option(value="") Chọn danh mục sản phẩm
+          +select-tree(records)
     .form-group
       label(for="price") Giá
       input(type="number" class="form-control" id="price" name="price" required min="1" )

@@ -1,0 +1,14 @@
+﻿extends ../../layouts/default.pug
+block content
+  h1(class="mb-4") Thêm vai trò mới
+    form(
+        action=`${prefixAdmin}/roles/create`
+        method="POST" 
+    )
+        .form-group
+        label(for="title") Tên vai trò
+        input(type="text" class="form-control" id="title" name="title" required)
+        .form-group
+        label(for="description") Mô tả
+        textarea(class="form-control" id="description" name="description" rows="3" )
+        button(type="submit" class="btn btn-primary") Tạo vai trò
